@@ -1,5 +1,5 @@
 name: "Setup Agda"
-description "Setup Agda environment"
+description: "Setup Agda environment"
 inputs:
   agda-ref:
     description: "Git reference to checkout for Agda"
