@@ -49,4 +49,5 @@ runs:
     run: |
       mkdir -p ~/.agda/
       echo "$GITHUB_WORKSPACE/agda-stdlib/standard-library.agda-lib" > ~/.agda/libraries
+    shell: bash
 
