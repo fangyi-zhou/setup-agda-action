@@ -1,0 +1,52 @@
+name: "Setup Agda"
+description "Setup Agda environment"
+inputs:
+  agda-ref:
+    description: "Git reference to checkout for Agda"
+    required: true
+  ghc-version:
+    description: "Version of GHC to use for Agda"
+    required: true
+  stdlib-ref:
+    description: "Git reference to checkout for Agda standard library"
+    required: false
+runs:
+  using: "composite"
+  steps:
+  - uses: actions/cache@v2
+    name: Cache agda
+    id: cache-agda
+    with:
+      path: |
+        ~/.cabal
+        agda
+        agda-stdlib
+      key: ${{ runner.os }}-${{ inputs.agda-ref }}-${{ inputs.ghc-version }}-${{ inputs.stdlib-ref }}
+
+  - uses: haskell/actions/setup@v1
+    name: Setup GHC
+    with:
+      ghc-version: ${{ inputs.ghc-version }}
+
+  - uses: actions/checkout@v2
+    name: Checkout Agda
+    if: steps.cache-agda.outputs.cache-hit != 'true'
+    with:
+      repository: agda/agda
+      path: agda
+      ref: ${{ inputs.agda-ref }}
+
+  - uses: actions/checkout@v2
+    name: Checkout Agda Standard Library
+    if: steps.cache-agda.outputs.cache-hit != 'true' && inputs.stdlib-ref != ''
+    with:
+      repository: agda/agda-stdlib
+      path: agda-stdlib
+      ref: ${{ inputs.stdlib-ref }}
+
+  - name: Put standard library in Agda library list
+    if: inputs.stdlib-ref != ''
+    run: |
+      mkdir -p ~/.agda/
+      echo "$GITHUB_WORKSPACE/agda-stdlib/standard-library.agda-lib" > ~/.agda/libraries
+
