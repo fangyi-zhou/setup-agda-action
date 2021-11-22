@@ -39,6 +39,7 @@ runs:
   - name: Compile Agda
     run: |
       cd agda
+      touch doc/user-manual.pdf
       cabal install
     shell: bash
 
