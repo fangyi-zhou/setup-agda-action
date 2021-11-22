@@ -36,6 +36,12 @@ runs:
       path: agda
       ref: ${{ inputs.agda-ref }}
 
+  - name: Compile Agda
+    run: |
+      cd agda
+      cabal install
+    shell: bash
+
   - uses: actions/checkout@v2
     name: Checkout Agda Standard Library
     if: steps.cache-agda.outputs.cache-hit != 'true' && inputs.stdlib-ref != ''
