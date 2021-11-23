@@ -42,6 +42,7 @@ runs:
       ref: ${{ inputs.agda-ref }}
 
   - name: Compile Agda
+    if: steps.cache-agda.outputs.cache-hit != 'true'
     run: |
       cd agda
       touch doc/user-manual.pdf
