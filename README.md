@@ -21,7 +21,7 @@ jobs:
 
     steps:
     - name: Setup Agda
-      uses: fangyi-zhou/setup-agda-action@main
+      uses: fangyi-zhou/setup-agda-action@v0.1.0
       with:
         # Git reference of agda/agda to checkout
         agda-ref: ${{ matrix.agda-ref }}
