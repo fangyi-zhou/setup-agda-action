@@ -28,6 +28,11 @@ runs:
     with:
       ghc-version: ${{ inputs.ghc-version }}
 
+  - name: Add .cabal/bin into PATH
+    run:
+      echo "$HOME/.cabal/bin" >> $GITHUB_PATH
+    shell: bash
+
   - uses: actions/checkout@v2
     name: Checkout Agda
     if: steps.cache-agda.outputs.cache-hit != 'true'
